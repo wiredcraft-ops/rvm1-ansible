@@ -1,0 +1,33 @@
+---
+driver:
+  name: docker
+  use_sudo: false
+#  privileged: true
+
+provisioner:
+  name: ansible_playbook
+  roles_path: roles
+  hosts: test-kitchen
+  require_ansible_repo: true
+  ansible_verbose: 2
+  ansible_version: latest
+  require_chef_for_busser: false
+
+platforms:
+  - name: ubuntu-14.04
+    driver_config:
+      image: ubuntu:14.04
+      platform: ubuntu
+#    provision_command:
+#      - apt-get -y install iproute
+#      - apt-get -y install net-tools
+
+verifier:
+    name: serverspec
+
+suites:
+  # suites found at test/integration/$test-name
+  - name: default
+#    verifier:
+#        bundler_path: '/usr/local/bin'
+#        rspec_path: '/usr/local/bin'
